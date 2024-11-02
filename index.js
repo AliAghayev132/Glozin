@@ -12,6 +12,8 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(multer().any());
 
+
+
 async function setupDatabase() {
   try {
     await mongoose.connect("mongodb://localhost:27017/glozin");
@@ -60,6 +62,10 @@ app.use("/api/admin", adminRouter);
 // Default route
 app.get("*", (req, res) => {
   res.status(200).json({ success: true, message: "Welcome to Glozin APP" });
+});
+
+app.get("/", (req, res) => {
+  res.send("Express on Vercel");
 });
 
 // Start the server
