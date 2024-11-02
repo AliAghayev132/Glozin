@@ -4,7 +4,8 @@
   "description": "A RESTful API backend for the Glozin website, built with Express.js, providing user management, product handling, and order processing functionality, along with secure JWT authentication and MongoDB integration.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "author": "AliAghayev",
   "license": "ISC",
