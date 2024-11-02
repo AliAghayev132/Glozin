@@ -12,11 +12,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 app.use(multer().any());
 
-
-
 async function setupDatabase() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/glozin");
+    await mongoose.connect(
+      "mongodb+srv://aliaghayev132:PIib8WcfTrY7J4zY@glozin.xdbvw.mongodb.net/?retryWrites=true&w=majority&appName=Glozin"
+    );
     console.log("MongoDB connected!");
   } catch (err) {
     console.error("MongoDB connection error:", err);
