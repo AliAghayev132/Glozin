@@ -39,7 +39,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000", // Update this to match your actual server URL
+        url: "https://glozin.vercel.app/", // Update this to match your actual server URL
       },
     ],
   },
