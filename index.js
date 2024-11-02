@@ -2,7 +2,7 @@
 const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
+const swaggerJSDoc = require("swagger-jsdoc");
 const mongoose = require("mongoose");
 const multer = require("multer");
 
@@ -11,8 +11,6 @@ const multer = require("multer");
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(multer().any());
-const CSS_URL =
-  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
 async function setupDatabase() {
   try {
@@ -48,18 +46,18 @@ const swaggerOptions = {
   apis: ["./routes/**/*.js", "./schemas/**/*.js"], // Path to the API docs
 };
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
+const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css"
 
-// Swagger UI setup
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(swaggerSpec, {
+// Swagger setup
+const swaggerSpec = swaggerJSDoc(swaggerOptions)
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
     customCss:
-      ".swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }",
+        '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
     customCssUrl: CSS_URL,
-  })
-);
+}
+))
+
 
 // Import routes
 const userRouter = require("./routes/user/userRoutes");
