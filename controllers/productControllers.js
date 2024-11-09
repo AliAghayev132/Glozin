@@ -1,3 +1,4 @@
+const { log } = require("console");
 const Product = require("../schemas/Product");
 const multer = require("multer");
 const path = require("path");
@@ -12,7 +13,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage }).any();
+const upload = multer({ storage }).any(); // Adjust based on your form field
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -37,50 +38,42 @@ exports.getProductById = async (req, res) => {
 
 exports.createProduct = async (req, res) => {
   try {
-    // Önce req.body verilerini test edelim
-    console.log("Received req.body:", req.body);
-
-    // Gerekli alanların olup olmadığını kontrol edelim
-    const {
-      brand,
-      title,
-      price,
-      sizes = ["s", "m"], // Varsayılan değer
-      stock,
-      sku,
-      description,
-      colors,
-      discountPercentage = 0, // Varsayılan değer
-    } = req.body;
-
-    if (
-      !brand ||
-      !title ||
-      !description ||
-      !price ||
-      !discountPercentage ||
-      !sizes ||
-      !stock ||
-      !colors ||
-      !sku
-    ) {
-      return res
-        .status(400)
-        .json({ message: "Tüm gerekli alanlar sağlanmalıdır." });
-    }
-
-    // Eğer req.body verileri doğruysa, dosya yükleme işlemini başlat
     upload(req, res, async (err) => {
       if (err) {
+        console.log(err);
         return res.status(500).json({
           message: "Dosya yükleme sırasında hata oluştu.",
           error: err,
         });
       }
 
-      // Dosya yükleme işlemi sonrası req.files ve req.body tekrar test edilebilir
-      console.log("Received req.files:", req.files);
-      console.log("Received req.body after upload:", req.body);
+      const {
+        brand,
+        title,
+        price,
+        sizes = ["s", "m"],
+        stock,
+        sku,
+        description,
+        colors,
+        discountPercentage = 0,
+      } = req.body;
+
+      if (
+        !brand ||
+        !title ||
+        !description ||
+        !price ||
+        !discountPercentage ||
+        !sizes ||
+        !stock ||
+        !colors ||
+        !sku
+      ) {
+        return res
+          .status(400)
+          .json({ message: "Tüm gerekli alanlar sağlanmalıdır." });
+      }
 
       // Renk ve fotoğraf eşlemesi
       const colorsPhotosMap = JSON.parse(colors).map((color) => {
@@ -99,7 +92,7 @@ exports.createProduct = async (req, res) => {
         price,
         sizes,
         stock,
-        sku,
+        sku: Math.random(),
         description,
         discountPercentage,
         colors: colorsPhotosMap,
@@ -107,6 +100,8 @@ exports.createProduct = async (req, res) => {
 
       // Ürünü kaydet
       await newProduct.save();
+      console.log({newProduct});
+
       return res
         .status(201)
         .json({ success: true, message: "Yeni ürün oluşturuldu", newProduct });
@@ -116,6 +111,7 @@ exports.createProduct = async (req, res) => {
     return res.status(500).json({ message: "İç sunucu hatası", error });
   }
 };
+
 exports.updateProduct = async (req, res) => {
   const {
     brand,

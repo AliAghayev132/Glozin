@@ -1,18 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../../../controllers/productControllers");
-const multer = require("multer");
-
-// Configure storage settings
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/products/uploads"); // Set your upload directory
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname); // Rename the file
-  },
-});
-const upload = multer({ storage });
 /**
  * @swagger
  * tags:

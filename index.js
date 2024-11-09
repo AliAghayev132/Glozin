@@ -3,6 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+
 const mongoose = require("mongoose");
 const multer = require("multer");
 
@@ -10,7 +11,6 @@ const multer = require("multer");
 
 const app = express();
 const port = process.env.PORT || 3000;
-app.use(multer().any());
 
 async function setupDatabase() {
   try {
