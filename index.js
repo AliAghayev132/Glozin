@@ -39,25 +39,28 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "https://glozin.vercel.app/", // Update this to match your actual server URL
+        url: "https://glozin-backend.onrender.com/", // Update this to match your actual server URL
       },
     ],
   },
   apis: ["./routes/**/*.js", "./schemas/**/*.js"], // Path to the API docs
 };
 
-const CSS_URL = "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css"
+const CSS_URL =
+  "https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css";
 
 // Swagger setup
-const swaggerSpec = swaggerJSDoc(swaggerOptions)
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerSpec, {
     customCss:
-        '.swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }',
+      ".swagger-ui .opblock .opblock-summary-path-description-wrapper { align-items: center; display: flex; flex-wrap: wrap; gap: 0 10px; padding: 0 10px; width: 100%; }",
     customCssUrl: CSS_URL,
-}
-))
-
+  })
+);
 
 // Import routes
 const userRouter = require("./routes/user/userRoutes");

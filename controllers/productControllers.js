@@ -1,4 +1,3 @@
-const { log } = require("console");
 const Product = require("../schemas/Product");
 const multer = require("multer");
 const path = require("path");
@@ -100,7 +99,6 @@ exports.createProduct = async (req, res) => {
 
       // Ürünü kaydet
       await newProduct.save();
-      console.log({newProduct});
 
       return res
         .status(201)
